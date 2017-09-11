@@ -21,7 +21,7 @@ WITH (STATE = ON)
 CREATE SERVER AUDIT SPECIFICATION [Audit_Server_Configuration_Changes]
 FOR SERVER AUDIT DerbyconAudit
 ADD (AUDIT_CHANGE_GROUP), 								-- Audit Audit changes
-ADD (SERVER_OPERATION_GROUP)  								-- Audit server changes
+ADD (SERVER_OPERATION_GROUP)  								-- Audit server changes (Enabling oscmdexec options)
 WITH (STATE = ON)
 
 -- DATABASE: Audit common agent job activity
@@ -30,9 +30,9 @@ WITH (STATE = ON)
 Use msdb
 CREATE DATABASE AUDIT SPECIFICATION [Audit_Agent_Jobs]
 FOR SERVER AUDIT [DerbyconAudit]
-ADD (EXECUTE ON OBJECT::[dbo].[sp_delete_job] BY [dbo]),
-ADD (EXECUTE ON OBJECT::[dbo].[sp_add_job] BY [dbo]),
-ADD (EXECUTE ON OBJECT::[dbo].[sp_start_job] BY [dbo])
+ADD (EXECUTE ON OBJECT::[dbo].[sp_delete_job] BY [dbo]),				-- Audit agent job delete
+ADD (EXECUTE ON OBJECT::[dbo].[sp_add_job] BY [dbo]),					-- Audit agent job add * ssis, cmdexec, powershell, active scripting (jscript/vbscript)
+ADD (EXECUTE ON OBJECT::[dbo].[sp_start_job] BY [dbo])					-- Audit agent job start
 WITH (STATE = ON)
 
 -- DATABASE: Audit potentially dangerous procedures
