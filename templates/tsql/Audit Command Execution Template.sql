@@ -41,7 +41,8 @@ WITH (STATE = ON)
 use master
 CREATE DATABASE AUDIT SPECIFICATION [Audit_OSCMDEXEC]
 FOR SERVER AUDIT [DerbyconAudit]
-ADD (EXECUTE ON OBJECT::[dbo].[xp_cmdshell] BY [dbo]),					-- Audit xp_cmdshell execution
+ADD (EXECUTE ON OBJECT::[dbo].[xp_cmdshell] BY [dbo]),					-- Audit xp_cmdshell execution (os commands)
+ADD (EXECUTE ON OBJECT::[dbo].[xp_regwrite] BY [dbo]),					-- Audit xp_regwrite execution (potential registry autoruns)
 ADD (EXECUTE ON OBJECT::[dbo].[sp_addextendedproc] BY [dbo]),				-- Audit additional of custom extended stored procedures
 ADD (EXECUTE ON OBJECT::[dbo].[sp_execute_external_script] BY [dbo]), 			-- Audit execution of external scripts such as R and Python
 ADD (EXECUTE ON OBJECT::[dbo].[Sp_oacreate] BY [dbo])					-- Audit OLE Automation Procedure execution
